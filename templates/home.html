@@ -1,0 +1,60 @@
+﻿
+<!--style>
+.row .right.carousel-control {
+	height:auto !important;
+	width:auto !important;
+	min-width: 0px !important;
+	min-height: 0px !important;
+}
+</style-->
+<div class="container-fluid" block-ui="main">  	
+	<div ng-app="ReConnectApp" ng-controller="homeController" class="ngCloak">
+		<div class="row">
+			<div class="row" ng-include="'../SiteAssets/reconnect/templates/breadcrumb.tpl.html'"></div>
+			<div>
+				<h4>Latest News</h4>
+			</div>
+			<div class="row" uib-carousel active="active" no-wrap="noWrapSlides" interval="myInterval">
+				<div  class="row" uib-slide ng-repeat="item in master  | orderBy:'-Created' | limitTo: 10" index="$index">
+					<a href="#/NewsDetail/{{item.ID}}/"><img ng-src="{{formatImgUrl(item.ID, item.Cover_x0020_Image)}}" class="img-responsive" style="width: 100% !important"></a>
+					<div class="row carousel-caption">
+						<div class="navbar transparent" style="width:auto;">
+							<a href="#/NewsDetail/{{item.ID}}/">{{ item.Title | limitTo: 50 }} {{ item.Title.length > 50 ? '...' : '' }}</a>
+							<!-- <small> (Like <span>#{{(item.LikesCount == null ? 0 : item.LikesCount)}}</span>)</small> -->		
+							<small>( posted on {{ item.Created | date:"dd-MM-yyyy" }} )</small><br>
+							<a href="#/NewsDetail/{{item.ID}}/" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-circle-arrow-right"></span> More</a>	
+						</div>
+					</div>
+				</div>
+			</div>
+			<br><br>
+			<h4>Latest Announcements</h4>		
+				<div class="row">
+					<div class="col-sm-12">
+						<div ng-repeat="item in announcemaster| orderBy: '-Created' | filter:q |  limitTo: 4">
+
+							<div class="col-sm-6">
+								<div style="height:160px;">
+									<h4>
+										<!--<img src="https://shangrila.sharepoint.com/sites/reconnect/SiteAssets/reconnect/images/new.gif">-->
+										<strong><a href="#/AnnounceDetail/{{item.ID}}/">
+												{{ item.Title | limitTo: 100 }} {{ item.Title.length > 100 ? '...' : '' }}
+										</a></strong>
+									</h4>
+									<h5>{{item.Description | htmlToPlaintext | limitTo:150}} {{ item.Description.length > 150 ? '...' : '' }}</h5>
+									<h5>{{getDivisionNameByCode(item.Division)}}</h5>
+
+									<h6><small>Posted by {{ item.Author.Title }}  {{ item.Created | date:"dd-MM-yyyy" }}</small> <!--a href="#/AnnounceEdit/{{item.ID}}/">[Edit]</a--></h6>
+									<!--span class="glyphicon glyphicon-thumbs-up">{{ (item.LikesCount == null ? 0 : item.LikesCount) }}</span-->
+									<!--&nbsp;<a href="#" class="LikeButton">Like</a> -->
+									
+								</div>				
+							</div>
+						</div>		
+					</div>
+				</div>
+			<div ng-include="'../SiteAssets/reconnect/templates/footer.tpl.html'"></div>
+		</div>
+	</div>
+</div>
+

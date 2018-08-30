@@ -1,0 +1,284 @@
+<div class="container-fluid" block-ui="main">  	
+<div ng-app="ReConnectApp" class="ng-cloak">
+<div class="row">
+<div ng-include="'../SiteAssets/reconnect/templates/breadcrumb.tpl.html'"></div>
+
+<fieldset>
+
+<h4> Edit News </h4>
+
+<div class="alert alert-danger fade in" ng-show="master.Status==0">
+	<span class="close" data-dismiss="alert">&times;</span>
+	<span><h3>This News was expired or removed.</h3></span>
+</div>   
+
+<div class="alert alert-success fade in" ng-show="my.createdOK">
+	<span class="close" data-dismiss="alert">&times;</span>
+	<span><h4>{{my.createdSuccessAlert}}</h4></span>
+</div>  
+
+<div class="alert alert-success fade in" ng-show="my.updatedOK || my.thisUpdatedOK">
+	<span class="close" data-dismiss="alert">&times;</span>
+	<span><h4>{{my.updatedSuccessAlert}}</h4></span>
+</div>  
+
+ <uib-accordion>	
+    <div uib-accordion-group class="panel-default" is-open="panelStatus.isCustomHeaderOpen">
+      <uib-accordion-heading>
+        (A) Click to edit "News" content<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': panelStatus.isCustomHeaderOpen, 'glyphicon-chevron-right': !panelStatus.isCustomHeaderOpen}"></i>
+      </uib-accordion-heading>
+      <form editable-form name="editableForm">
+		<div class="form-group">
+			<span class="label label-default">Division</span>
+			<div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+					<div class="dropdown">
+						<span editable-select="master.Division" e-name="Division" e-ng-options="x.id as x.text for x in Division" onaftersave="updateNews(master)">
+							{{ (Division | filter:{id: master.Division})[0].text || 'Not set' }}
+						</span>
+					</div>	
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<span class="label label-default">Title</span>
+			<div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+					<span editable-text="master.Title" e-name="Title" e-required onbeforesave="validateTitle($data)" onaftersave="updateNews(master)">{{ master.Title || 'Click here to edit' }}</span>									
+				</div>
+			</div>
+		</div>   
+
+		<div class="form-group">
+			<span class="label label-default">Description</span>
+			<div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+					<span editable-textarea="master.Description" ng-bind-html="master.Description" e-name="Description" e-required e-rows="7" e-cols="40" onbeforesave="validateDescription($data)" onaftersave="updateNews(master)"></span>
+				</div>
+			</div>		
+		</div>   
+
+		<div class="form-group">
+			<span class="label label-default">Expiry Date</span>
+			<div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+					<a href="#" editable-bsdate="master.ExpiryDate" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validateExpiryDate($data)" onaftersave="updateNews(master)">
+						{{ (master.ExpiryDate | date:"MM/dd/yyyy") || 'Click here to edit' }}
+					</a>
+				</div>
+			</div>		
+		</div>  
+
+		<div class="form-group">
+			<span class="label label-default">Reference Links</span>  
+			<div>			
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+					<span editable-url="master.Reference_x0020_Link_x0020_1" e-name="URL1" onbeforesave="validateUrl($data)" onaftersave="updateNews(master)">{{ master.Reference_x0020_Link_x0020_1 || 'Click here to edit' }}</span>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+					<span editable-url="master.Reference_x0020_Link_x0020_2" e-name="URL2" onbeforesave="validateUrl($data)" onaftersave="updateNews(master)">{{ master.Reference_x0020_Link_x0020_2 || 'Click here to edit' }}</span>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+					<span editable-url="master.Reference_x0020_Link_x0020_3" e-name="URL3" onbeforesave="validateUrl($data)" onaftersave="updateNews(master)">{{ master.Reference_x0020_Link_x0020_3 || 'Click here to edit' }}</span>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+					<span editable-url="master.Reference_x0020_Link_x0020_4" e-name="URL4" onbeforesave="validateUrl($data)" onaftersave="updateNews(master)">{{ master.Reference_x0020_Link_x0020_4 || 'Click here to edit' }}</span>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+					<span editable-url="master.Reference_x0020_Link_x0020_5" e-name="URL5" onbeforesave="validateUrl($data)" onaftersave="updateNews(master)">{{ master.Reference_x0020_Link_x0020_5 || 'Click here to edit' }}</span>
+				</div>																				
+			</div>
+		</div>
+	</form>	
+    </div>
+	
+    <div uib-accordion-group class="panel-default" is-open="panelCalendarStatus.isCalendarHeaderOpen">
+      <uib-accordion-heading>
+        (B) Click to upload "cover" image<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': panelCalendarStatus.isCalendarHeaderOpen, 'glyphicon-chevron-right': !panelCalendarStatus.isCalendarHeaderOpen}"></i>
+      </uib-accordion-heading>
+
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<nav class = "navbar navbar-info" role = "navigation">
+						<div><i>Cover Image Preview</i> <div class="panel-body"><img src="{{ master.coverImgUrl }}" style="width:50%;height:50%;"></div></div>
+					</nav>
+				</div>
+			</div>
+		</div>		
+
+		<div class="form-group">
+			<form name="frmUpload">
+				<div style="position:relative;">
+					<a class='btn btn-primary' href='javascript:;'>
+						1. Choose File
+						<input type="file" ngf-select ng-model="master.picFile" name="file" required accept="image/*" ngf-multiple="false" ngf-min-height="530" ngf-max-height="530" ngf-min-width="1280" ngf-max-width="1280" ngf-max-size="500KB" ngf-pattern="'image/*'"  ngf-model-invalid="errorFile" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' size="40" onchange='$("#upload-file-info").html($(this).val());'>
+					</a>
+					&nbsp;<span class='label label-info' id="upload-file-info"></span>
+				</div>
+				<br>
+				<img ng-show="frmUpload.file.$valid" ngf-thumbnail="master.picFile" class="thumb"> 
+				<span ng-show="frmUpload.file.$valid">&nbsp;&nbsp;</span>
+
+				<button class="btn btn-info btn-sm" ng-click="master.picFile = null" ng-show="master.picFile"><span class="glyphicon glyphicon-circle-arrow-right"></span> Remove?</button>
+
+				<span ng-show="frmUpload.file.$valid && master.picFile">&nbsp;&nbsp;</span> 				
+				<button class="btn btn-info btn-sm" ng-click="uploadCoverImage(master.picFile)" ng-disabled="!frmUpload.$valid"><span class="glyphicon glyphicon-circle-arrow-right"></span> 2. Click Upload</button>
+				<br><br>
+				
+				<div class="alert alert-danger fade in" ng-show="frmUpload.file.$error.minHeight || frmUpload.file.$error.maxHeight ||frmUpload.file.$error.minWidth || frmUpload.file.$error.minWidth">
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>Invalid Width or Height.  Image size must be 1280 x 530 in pixel.</span>
+				</div>
+
+				<div class="alert alert-danger fade in" ng-show="frmUpload.file.$error.required && frmUpload.$dirty">
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>Please pickup a valid image.</span>
+				</div>
+
+				<div class="alert alert-danger fade in" ng-show="frmUpload.file.$error.maxSize && frmUpload.$dirty">					
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>File is too large <u>{{errorFile.size / 1000000|number:1}}MB</u>. Please pickup a valid image less than <u>500 KB</u></span>
+				</div>
+
+				<div class="alert alert-danger fade in" ng-show="frmUpload.file.$error.pattern && frmUpload.$dirty">					
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>File format is invalid.  Cover image pattern is JPG/PNG/GIF only.</span><br>
+				</div>								
+
+				<span class="progress" ng-show="master.picFile.progress >= 0">
+					<div style="width:{{master.picFile.progress}}%; font-weight:bold;" ng-bind="master.picFile.progress + '%'"></div>
+				</span>
+
+				<div class="alert alert-success fade in" ng-show="master.picFile.result">
+					<span class="close" data-dismiss="alert">&times;</span>
+					<strong>Image Upload Successful!</strong>
+				</div>				
+
+			</form>
+		</div>		
+    </div>
+
+    <div uib-accordion-group class="panel-default" is-open="panelThumbnail.isThumbnailHeaderOpen">
+      <uib-accordion-heading>
+        (C) Click to upload "sub" images<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': panelThumbnail.isThumbnailHeaderOpen, 'glyphicon-chevron-right': !panelThumbnail.isThumbnailHeaderOpen}"></i>
+      </uib-accordion-heading>
+
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<nav class = "navbar navbar-info" role = "navigation">
+						<div>	
+							<i>Sub Image Preview</i>
+							<div class="alert alert-danger fade in" ng-show="showSuccessAlert">
+								<span class="close" data-dismiss="alert">&times;</span>
+								<span>Sub image removed.</span><br>
+							</div>
+							<div ng-repeat="fileNameList in master.subFileName | customFilter:master.CoverImage">
+								<img src="https://shangrila.sharepoint.com/sites/reconnect/Lists/CorporateNews/Attachments/{{master.ItemID}}/{{fileNameList.FileName}}" style="width:auto; height:auto;">
+								&nbsp;&nbsp;{{fileNameList.FileName}} &nbsp;&nbsp;&nbsp;								
+								<button type="button" class="btn btn-warning"  data-ng-click="RemoveSubImage(fileNameList.FileName, $index)" ng-confirm-click="Do you want to proceed to delete ?">Delete?</button>
+								<hr>
+							</div>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>		
+
+		<div class="form-group">
+			<form name="frmThumbnail">
+				<div style="position:relative;">
+					<div style="position:relative;">
+						<a class='btn btn-primary' href='javascript:;'>
+							1. Choose sub image
+							<input type="file" ngf-select ng-model="master.multiFile" name="multiFile" accept="image/*" ngf-multiple="false" ngf-max-height="350" ngf-max-width="350" ngf-max-size="300KB" ngf-pattern="'image/*'" ngf-model-invalid="errorFile"  style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' size="40" onchange='$("#upload-multiFile-info").html($(this).val());'>
+						</a>
+						&nbsp;<span class='label label-info' id="upload-multiFile-info"></span>
+					</div>
+				</div>
+				<br>
+				<div>
+					<button class="btn btn-info btn-sm" ng-click="uploadMultiImage(master.multiFile)" ng-disabled="!frmThumbnail.$valid"><span class="glyphicon glyphicon-circle-arrow-right"></span> 2. Upload</button>
+				</div>
+
+				<div class="alert alert-danger fade in" ng-show="frmThumbnail.multiFile.$error.maxHeight || frmThumbnail.multiFile.$error.maxWidth">
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>Invalid Width or Height.  Image size must be less than 350 x 350 in pixel.</span>
+				</div>
+
+				<div class="alert alert-danger fade in" ng-show="frmThumbnail.multiFile.$error.maxSize">					
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>File is too large <u>{{errorFile.size / 1000000|number:1}}MB</u>. Please pickup a valid image less than <u>300 KB</u></span>
+				</div>
+
+				<div class="alert alert-danger fade in" ng-show="frmThumbnail.multiFile.$error.pattern">					
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>File format is invalid.  Image pattern is JPG/PNG/GIF only.</span><br>
+				</div>
+
+				<div class="alert alert-danger fade in" ng-show="my.isDuplicatedFileName" >					
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>The FileName is already existed.  Please use other names instead.</span><br>
+				</div>
+
+				<div class="alert alert-danger fade in" ng-show="my.isMaxNumber" >					
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>Max number of images uploaded is 10 only.</span><br>
+				</div>				
+
+				<div class="alert alert-success fade in" ng-show="master.multiFile.result">
+					<span class="close" data-dismiss="alert">&times;</span>
+					<strong>Image Upload Successful!</strong> 
+				</div>					
+
+				<div><h5><small>Max number of images uploaded is 10 only.</small></h5></div>
+			</form>
+		</div>
+    </div>
+
+	<div uib-accordion-group class="panel-default" is-open="panelRemove.isRemoveHeaderOpen">
+      <uib-accordion-heading>
+        (D) Click to remove "News"<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': panelRemove.isRemoveHeaderOpen, 'glyphicon-chevron-right': !panelRemove.isRemoveHeaderOpen}"></i>
+      </uib-accordion-heading>
+		<div class="form-group">
+			<form name="frmUpload">				
+				<div class="panel-group">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<nav class = "navbar navbar-info" role = "navigation">
+								Removal of "News" is a permenant event, you are no longer to access to this "News" anymore.<br>   
+								<h5>"{{ master.Title }}"</h5>													  
+								<a href="" ng-click="RemoveNews(master)" ng-confirm-click="Do you really want to proceed to remove?"><span class="glyphicon glyphicon-circle-arrow-right"></span> Remove?</a>
+							</nav>
+						</div>
+					</div>
+				</div>					
+			</form>
+		</div>		
+    </div>	
+</uib-accordion>
+
+<div class="form-group">
+	<div class="col-md-8 inputGroupContainer">
+		<input type="button" id="btnCancel" class="btn btn-info btn-sm" value="Back to News" ng-click="CancelForm()" />
+	</div>
+</div>
+
+<br><br><br>
+
+</fieldset>
+<div ng-include="'../SiteAssets/reconnect/templates/footer.tpl.html'"></div>
+</div>
+</div>
+</div>

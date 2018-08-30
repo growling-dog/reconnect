@@ -1,0 +1,110 @@
+﻿
+div[ng-app] { margin: 10px; }
+form[name="editableForm"] > div {
+  height: auto;
+  padding: 5px 0;
+}
+
+form[name="editableForm"] .title {
+  display: inline-block;
+  font-weight: bold;
+  padding-top: 5px;
+  vertical-align: top;
+  min-width: 90px;
+}
+
+form[name="editableForm"] .editable {
+  display: inline-block;
+  padding-top: 5px;
+  vertical-align: top;
+}
+
+form[name="editableForm"] select {
+  width: 120px;
+}
+
+.thumb {
+    width: 154px;
+    height: 120px;
+    float: none;
+    position: relative;
+    top: 0px;
+}
+
+form .progress {
+    line-height: 35px;
+}
+
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+
+.panel-default >.panel-heading {
+    background-color: #e3f2fd!important;
+}
+
+/* add a little bottom space under the images */
+.thumbnail {
+	margin-bottom:7px;
+}
+
+div.carousel-caption a { color: #fff !important; }
+div.carousel-caption a:hover { color: #fff !important; text-decoration: underline; }
+.navbar.transparent{ height:75px; width:100%; margin:10px 0;background:rgba(255,255,255, 0.3);}
+.overlay{width:99%; height:340px; position:absolute; top:0; left:0; background:rgba(255,255,255,.9);}
+
+/* arrange many <div> elements side by side with no wrap [duplicate] */
+.newsDetailContiner {
+    width:100%;
+    overflow:hidden;
+    white-space: nowrap;
+}
+.newsDetailContiner div { display: inline-block; }
+.newsDetailDiv1{
+    background: none repeat 0 0;
+    height: auto;
+    width: auto;
+}
+.newsDetailDiv2{
+    background: none repeat 0 0;
+    height: auto;
+    width: auto;
+}
+.newsDetailDiv3{
+    background: none repeat 0 0;
+    height: auto;
+    width: auto;
+}
+
+.input-xs {
+  height: 29px;
+  width: 80px;
+  padding: 2px 5px;
+  font-size: 11px;
+  line-height: 1.5; /* If Placeholder of the input is moved up, rem/modify this. */
+  border-radius: 3px;
+}
+
+.input-xs-text {
+  height: 29px;
+  width: 170px;
+  padding: 2px 5px;
+  font-size: 11px;
+  line-height: 1.5; /* If Placeholder of the input is moved up, rem/modify this. */
+  border-radius: 3px;
+}
+
+
+/*   Apply globally   */
+    html, body, table, thead, tbody, tr { width: 100%; !important }
+    table { table-layout: fixed }
+    table > thead > tr > th { width: auto; }
+/*      */

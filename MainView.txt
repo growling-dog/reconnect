@@ -1,0 +1,68 @@
+<!-- Load third party scripts required by the people picker -->
+<script type="text/ecmascript" src="https://shangrila.sharepoint.com/_layouts/15/SP.UI.Controls.js"></script>
+<script type="text/ecmascript" src="https://shangrila.sharepoint.com/_layouts/15/clienttemplates.js"></script>
+<script type="text/ecmascript" src="https://shangrila.sharepoint.com/_layouts/15/clientforms.js"></script>
+<script type="text/ecmascript" src="https://shangrila.sharepoint.com/_layouts/15/clientpeoplepicker.js"></script>
+<script type="text/ecmascript" src="https://shangrila.sharepoint.com/_layouts/15/autofill.js"></script>
+<script type="text/ecmascript" src="https://shangrila.sharepoint.com/_layouts/15/sp.RequestExecutor.js"></script>
+<script type="text/ecmascript" src="https://shangrila.sharepoint.com/_layouts/15/MicrosoftAjax.js"></script>
+<script type="text/ecmascript" src="https://shangrila.sharepoint.com/_layouts/15/sp.runtime.js"></script>
+<script type="text/ecmascript" src="https://shangrila.sharepoint.com/_layouts/15/sp.js"></script>
+
+<link href="../SiteAssets/reconnect/css/style.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../SiteAssets/reconnect/js/xeditable.css"/>
+<link rel="stylesheet" href="../SiteAssets/reconnect/js/angular-block-ui.min.css"/>
+<link rel="stylesheet" href="../SiteAssets/reconnect/js/ngDialog.min.css">
+<link rel="stylesheet" href="../SiteAssets/reconnect/js/ngDialog-theme-default.min.css">
+
+<script src="../SiteAssets/reconnect/js/angular.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/js/angular-route.min.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/js/angular-filter.min.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/js/ng-file-upload-shim.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/js/ng-file-upload.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/js/angular-messages.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/js/xeditable.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/js/angular-mocks.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/js/angular-animate.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/js/angular-sanitize.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/js/angular-block-ui.min.js" type="text/javascript" ></script>
+<script src="../SiteAssets/reconnect/js/underscore-min.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/js/moment.js" type="text/javascript" ></script>
+<script src="../SiteAssets/reconnect/js/datetimepicker.js" type="text/javascript" ></script>
+<script src="../SiteAssets/reconnect/js/datetimepicker.templates.js" type="text/javascript" ></script>
+<script src="../SiteAssets/reconnect/js/ngDialog.min.js"></script>
+
+<script src="../SiteAssets/reconnect/app/app.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/common/baseSvc.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/common/newsService.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/common/sharedService.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/common/miscService.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/app/NewsCreateController.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/app/NewsEditController.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/app/NewsMainController.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/app/homeController.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/app/dirPagination.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/app/NewsDetailController.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/app/DivPageController.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/app/UsefulLinkController.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/app/AnnounceMainController.js" type="text/javascript"></script>
+
+<script src="../SiteAssets/reconnect/app/AnnounceCreateController.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/app/AnnounceDetailController.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/app/AnnounceEditController.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/common/AnnounceService.js" type="text/javascript"></script>
+
+<script src="../SiteAssets/reconnect/app/CommonErrorController.js" type="text/javascript"></script>
+
+<script src="../SiteAssets/reconnect/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="../SiteAssets/reconnect/js/ui-bootstrap-tpls-2.2.0.min.js" type="text/javascript" ></script>
+<link href="../SiteAssets/reconnect/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<script src="../SiteAssets/reconnect/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../SiteAssets/reconnect/css/datetimepicker.css"/>
+<link rel="stylesheet" href="../SiteAssets/reconnect/css/font-awesome.css"/>
+
+
+<div data-ng-app="ReConnectApp">
+	<div data-ng-view ></div>
+</div>

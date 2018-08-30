@@ -1,0 +1,52 @@
+﻿<div class="container-fluid" block-ui="main">	
+	<div ng-app="ReConnectApp" class="ngCloak">
+        <div class="row">
+            <h4>Advanced Search Filter</h4>
+            <nav class="navbar navbar-info">
+                <ul class="nav navbar-nav">   
+
+                    <div class="input-group">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle my-toggle-select" id="FromDate" role="button" data-toggle="dropdown" data-target="#" href="">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-model="FormData.FromDate" placeholder="Posted From">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="FormData.FromDate" startView="day" minView='day' required="true" data-on-set-time="onStartDateSet(FromDate)" data-datetimepicker-config="{ dropdownSelector: '.dropdown-toggle',startView:'day', minView:'day'}"></datetimepicker>
+                            </ul>						
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle my-toggle-select" id="EndDate" role="button" data-toggle="dropdown" data-target="#" href="">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-model="FormData.ToDate" placeholder="Posted To">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="FormData.ToDate" startView="day" minView='day' required="true" data-on-set-time="onEndDateSet(EndDate)" data-datetimepicker-config="{ dropdownSelector: '.dropdown-toggle',startView:'day', minView:'day'}"></datetimepicker>
+                            </ul>						
+                        </div>
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <div class="dropdown">
+                            <select id="selDivision" ng-model="FormData.Division" ng-options="x.text for x in Division" class="dropdown">
+                                <option value="">-- All Divisions --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </ul>
+            </nav>
+            <div class="ngdialog-buttons">
+                <div class="btn btn-default btn-sm" ng-click="confirm(FormData)"><span class="glyphicon glyphicon-circle-arrow-right"></span> Search</div>
+                <div class="btn btn-default btn-sm" ng-click="closeThisDialog()">Cancel</div>
+            </div>
+        </div>
+    </div>
+</div>

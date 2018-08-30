@@ -1,0 +1,56 @@
+
+<div class="container-fluid" block-ui="main"> 
+    <div ng-app="ReConnectApp" ng-controller="DivPageController" class="ngCloak">
+        <div class="row" >
+            <form name="editableForm" class="form-horizontal">
+            <div ng-include="'../SiteAssets/reconnect/templates/breadcrumb.tpl.html'"></div>
+
+			<nav class="navbar navbar-info">
+				<ul class="nav navbar-nav">
+					<h4>Shangri-La Division Page</h4>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<input ng-model="q" id="search" class="form-control" placeholder="Quick Find..." aria-describedby="basic-addon1">
+				</ul>
+			</nav>
+
+			<nav class="navbar navbar-info">
+				<ul class="nav navbar-nav">
+                    <select id="selDivision" ng-model="selectedDivision" ng-options="x.id for x in Division" ng-change="divisionOnChange(selectedDivision,selectedType)" class="dropdown">
+                        <option value="">-- All Divisions --</option>
+                    </select>
+				</ul>
+                <ul class="nav navbar-nav">&nbsp;&nbsp;&nbsp;</ul>
+				<ul class="nav navbar-nav">
+                    <select id="selType" ng-model="selectedType" ng-options="x.id for x in ProgramType | unique:'id'" ng-change="divisionOnChange(selectedDivision,selectedType)" class="dropdown">
+                        <option value="">-- All Types --</option>
+                    </select>
+				</ul>
+			</nav>
+
+            <table class="table table-hover"  width="100%" border="0" cellspacing="0" cellpadding="0"  >
+                <thead>
+                    <tr>
+                        <th style="font-size:12px;width: 6%">Division</th>
+                        <th style="font-size:12px;width: 12%">Type</th>
+                        <th style="font-size:12px;width: 20%">Name</th>
+                        <th style="font-size:12px;width: 35%">URL</th>
+                        <th style="font-size:12px;">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in master | toArray:false | orderBy: ['Division','ProgramType'] | filter:q ">
+                        <td style="font-size:12px;">{{item.Division}}</td>
+                        <td style="font-size:12px;">{{item.ProgramType}}</td>
+                        <td style="font-size:12px;"><a href="{{item.url}}" target="_blank">{{item.ProgramName}}</a></td>
+                        <td style="font-size:12px;"><a href="{{item.url}}" target="_blank">{{item.url}}</a></td>
+                        <td style="font-size:12px;">{{ item.Description | limitTo: 50 }} {{ item.Description.length > 50 ? '...' : '' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-show="total==0">No Record Found.</div>
+            <div ng-include="'../SiteAssets/reconnect/templates/footer.tpl.html'"></div>
+            </form>
+        </div>
+    </div>
+</div>

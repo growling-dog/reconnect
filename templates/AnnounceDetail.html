@@ -1,0 +1,90 @@
+﻿
+<div class="container-fluid" block-ui="main">	
+<div ng-app="ReConnectApp" class="ngCloak">
+    <div class="row">
+        <div ng-include="'../SiteAssets/reconnect/templates/breadcrumb.tpl.html'"></div>
+        <h4>Shangri-La Announcement</h4>
+
+        <div class="alert alert-success fade in" ng-show="my.updatedOK">
+            <span class="close" data-dismiss="alert">&times;</span>
+            <span><h4>{{my.updatedSuccessAlert}}</h4></span>
+        </div>  
+        
+        
+        
+
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+                    <div class="alert alert-danger fade in" ng-show="master.Status==0">
+                        <span class="close" data-dismiss="alert">&times;</span>
+                        <span><h3>This Announcement  was expired or removed.</h3></span>
+                    </div>                     
+                    <ul class="nav navbar-nav">
+                        <h4>{{master.Title}} ({{master.Division}})</h4>      
+                        
+                        <h5><div ng-bind-html="master.Description | unsafe"></div></h5>
+	
+	
+						
+						
+						<a href="{{master.Reference_x0020_Link_x0020_1}}" target="_blank"><small>{{master.Reference_x0020_Link_x0020_1}}</small></a>
+						<a href="{{master.Reference_x0020_Link_x0020_2}}" target="_blank"><small>{{master.Reference_x0020_Link_x0020_2}}</small></a>
+						<a href="{{master.Reference_x0020_Link_x0020_3}}" target="_blank"><small>{{master.Reference_x0020_Link_x0020_3}}</small></a>
+						<a href="{{master.Reference_x0020_Link_x0020_4}}" target="_blank"><small>{{master.Reference_x0020_Link_x0020_4}}</small></a>
+						<a href="{{master.Reference_x0020_Link_x0020_5}}" target="_blank"><small>{{master.Reference_x0020_Link_x0020_5}}</small></a> 
+						 
+						
+						<div ng-repeat="fileNameList in master.subFileName | customFilter:master.CoverImage">
+						<li><a href="https://shangrila.sharepoint.com/sites/reconnect/Lists/Announcement/Attachments/{{master.ItemID}}/{{fileNameList.FileName}}">{{fileNameList.FileName}}</a></li> 
+						</div>
+						
+						<h5><small>Posted by {{master.Author}} on {{master.Created  | date:"dd-MM-yyyy"}}</small></h5>
+						<h5><small>Expiry date: {{master.ExpiryDate | date:"dd-MM-yyyy"}}</small></h5> 
+                   </ul>
+					
+  
+                    <ul class="nav navbar-nav navbar-right">
+                        <div class="newsDetailContiner">
+                             <div class="newsDetailDiv1">
+                                <div ng-show="!currentLikeStatus" ng-cloak>
+                                    <span class="glyphicon glyphicon-thumbs-up" ng-click="likeOnClick(master)" style="cursor: pointer;"></span>
+                                    <div id="divLikeUnlike-Liked" class="newsDetailDiv3" ng-click="likeOnClick(master)" style="cursor: pointer;">Like</div>
+                                </div>
+                                <div ng-show="currentLikeStatus" ng-cloak>
+                                    <span class="glyphicon glyphicon-thumbs-down" ng-click="likeOnClick(master)" style="cursor: pointer;"></span>
+                                    <div id="divLikeUnlike-Unliked" class="newsDetailDiv3" ng-click="likeOnClick(master)" style="cursor: pointer;">UnLike</div>
+                                </div>
+                             </div>
+                             
+                             
+                            <div id="divLikeCount" class="newsDetailDiv2 badge">
+                                {{(master.LikesCount == null ? 0 : master.LikesCount)}}
+                            </div>  
+                            &nbsp;&nbsp;&nbsp;&nbsp; 
+                        </div>
+                    </ul>        
+				</div>
+			</div>
+		</div>
+ 
+        <div class="form-group">
+            <div class="col-md-8 inputGroupContainer">
+                <div class="newsDetailContiner">
+                    <div class="newsDetailDiv1">
+                        <input type="button" id="btnHome" class="btn btn-info btn-sm" value="Back to Home" ng-click="HomeForm()" />
+                        <input type="button" id="btnCancel" class="btn btn-info btn-sm" value="Back to Announcement" ng-click="CancelForm()" />
+                    </div>                
+                    <div class="newsDetailDiv2" ng-show="master.Status==1">
+                        <input type="button" id="btnEdit" class="btn btn-info btn-sm" value="Edit" ng-click="EditForm(master.ItemID)" />
+                    </div>            
+                </div>        
+            </div>
+        </div>
+
+        <br><br><br>
+        
+        <div ng-include="'../SiteAssets/reconnect/templates/footer.tpl.html'"></div>
+    </div>
+ </div>
+</div>

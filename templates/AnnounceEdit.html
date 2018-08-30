@@ -1,0 +1,229 @@
+﻿<div class="container-fluid" block-ui="main">  	
+<div ng-app="ReConnectApp" class="ng-cloak">
+<div class="row">
+<div ng-include="'../SiteAssets/reconnect/templates/breadcrumb.tpl.html'"></div>
+
+<fieldset>
+
+<h4> Edit Announcement </h4>
+
+<div class="alert alert-danger fade in" ng-show="master.Status==0">
+	<span class="close" data-dismiss="alert">&times;</span>
+	<span><h3>This Announcement was expired or removed.</h3></span>
+</div>   
+
+<div class="alert alert-success fade in" ng-show="my.createdOK">
+	<span class="close" data-dismiss="alert">&times;</span>
+	<span><h4>{{my.createdSuccessAlert}}</h4></span>
+</div>  
+
+<div class="alert alert-success fade in" ng-show="my.updatedOK || my.thisUpdatedOK">
+	<span class="close" data-dismiss="alert">&times;</span>
+	<span><h4>{{my.updatedSuccessAlert}}</h4></span>
+</div>  
+
+ <uib-accordion>	
+    <div uib-accordion-group class="panel-default" is-open="panelStatus.isCustomHeaderOpen">
+      <uib-accordion-heading>
+        (A) Click to edit "Announcement" content<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': panelStatus.isCustomHeaderOpen, 'glyphicon-chevron-right': !panelStatus.isCustomHeaderOpen}"></i>
+      </uib-accordion-heading>
+      <form editable-form name="editableForm">
+		<div class="form-group">
+			<span class="label label-default">Division</span>
+			<div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+					<div class="dropdown">
+						<span editable-select="master.Division" e-name="Division" e-ng-options="x.id as x.text for x in Division" onaftersave="updateNews(master)">
+							{{ (Division | filter:{id: master.Division})[0].text || 'Not set' }}
+						</span>
+					</div>	
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<span class="label label-default">Title</span>
+			<div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+					<span editable-text="master.Title" e-name="Title" e-required onbeforesave="validateTitle($data)" onaftersave="updateNews(master)">{{ master.Title || 'Click here to edit' }}</span>									
+				</div>
+			</div>
+		</div>   
+
+		<div class="form-group">
+			<span class="label label-default">Description</span>
+			<div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+					<span editable-textarea="master.Description" ng-bind-html="master.Description|unsafe" e-name="Description" e-required e-rows="50" e-cols="100" onbeforesave="validateDescription($data)" onaftersave="updateNews(master)"></span>
+				</div>
+			</div>		
+		</div>   
+
+		<div class="form-group">
+			<span class="label label-default">Expiry Date</span>
+			<div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+					<a href="#" editable-bsdate="master.ExpiryDate" e-is-open="opened.$data" e-ng-click="open($event,'$data')" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validateExpiryDate($data)" onaftersave="updateNews(master)">
+						{{ (master.ExpiryDate | date:"MM/dd/yyyy") || 'Click here to edit' }}
+					</a>
+				</div>
+			</div>		
+		</div>  
+
+		<div class="form-group">
+			<span class="label label-default">Reference Links</span>  
+			<div>			
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+					<span editable-url="master.Reference_x0020_Link_x0020_1" e-name="URL1" onbeforesave="validateUrl($data)" onaftersave="updateNews(master)">{{ master.Reference_x0020_Link_x0020_1 || 'Click here to edit' }}</span>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+					<span editable-url="master.Reference_x0020_Link_x0020_2" e-name="URL2" onbeforesave="validateUrl($data)" onaftersave="updateNews(master)">{{ master.Reference_x0020_Link_x0020_2 || 'Click here to edit' }}</span>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+					<span editable-url="master.Reference_x0020_Link_x0020_3" e-name="URL3" onbeforesave="validateUrl($data)" onaftersave="updateNews(master)">{{ master.Reference_x0020_Link_x0020_3 || 'Click here to edit' }}</span>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+					<span editable-url="master.Reference_x0020_Link_x0020_4" e-name="URL4" onbeforesave="validateUrl($data)" onaftersave="updateNews(master)">{{ master.Reference_x0020_Link_x0020_4 || 'Click here to edit' }}</span>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+					<span editable-url="master.Reference_x0020_Link_x0020_5" e-name="URL5" onbeforesave="validateUrl($data)" onaftersave="updateNews(master)">{{ master.Reference_x0020_Link_x0020_5 || 'Click here to edit' }}</span>
+				</div>																				
+			</div>
+		</div>
+	</form>	
+    </div>
+
+<div uib-accordion-group class="panel-default" is-open="panelThumbnail.isThumbnailHeaderOpen">
+      <uib-accordion-heading>
+        (B) Click to upload documents<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': panelThumbnail.isThumbnailHeaderOpen, 'glyphicon-chevron-right': !panelThumbnail.isThumbnailHeaderOpen}"></i>
+      </uib-accordion-heading>
+	
+		<div class="form-group">
+			<form name="frmThumbnail">
+				<br>
+				<div>
+					<input type="file" onchange="angular.element(this).scope().filesChanged(this)" multiple/>
+				</div>
+				
+				<br>
+					
+				<div data-ng-repeat="attachedfile in master.subFileName">
+					<li><a href="{{attachedfile.ServerRelativeUrl}}">
+						{{attachedfile.ServerRelativeUrl}} 
+						</a>
+						 <label ng-click="deleteDocument(attachedfile,attachedfile.FileName)">DELETE</label>
+					</li>
+
+				</div>
+
+				<div class="alert alert-danger fade in" ng-show="frmThumbnail.multiFile.$error.maxHeight || frmThumbnail.multiFile.$error.maxWidth">
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>Invalid Width or Height.  Image size must be less than 350 x 350 in pixel.</span>
+				</div>
+
+				<div class="alert alert-danger fade in" ng-show="frmThumbnail.multiFile.$error.maxSize">					
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>File is too large <u>{{errorFile.size / 1000000|number:1}}MB</u>. Please pickup a valid image less than <u>300 KB</u></span>
+				</div>
+
+				<div class="alert alert-danger fade in" ng-show="frmThumbnail.multiFile.$error.pattern">					
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>File format is invalid.  Image pattern is JPG/PNG/GIF only.</span><br>
+				</div>								
+
+				<div class="alert alert-danger fade in" ng-show="my.isDuplicatedFileName" >					
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>The FileName is already existed.  Please use other names instead.</span><br>
+				</div>
+
+				<div class="alert alert-danger fade in" ng-show="my.isMaxNumber" >					
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>Max number of documents uploaded is 10 only.</span><br>
+				</div>				
+
+				<div class="alert alert-success fade in" ng-show="master.multiFile.result">
+					<span class="close" data-dismiss="alert">&times;</span>
+					<strong>Document Upload Successful!</strong> 
+				</div>					
+
+				<div><h5><small>Max number of documents uploaded is 10 only.</small></h5></div>
+
+			
+			</form>
+		</div>	
+	</div>
+	<div uib-accordion-group class="panel-default" is-open="panelRemove.isRemoveHeaderOpen">
+      <uib-accordion-heading>
+        (C) Click to remove "Announcement"<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': panelRemove.isRemoveHeaderOpen, 'glyphicon-chevron-right': !panelRemove.isRemoveHeaderOpen}"></i>
+      </uib-accordion-heading>
+		<div class="form-group">
+			<form name="frmUpload">				
+				<div class="panel-group">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<nav class = "navbar navbar-info" role = "navigation">
+								Removal of "Announcement" is a permenant event, you are no longer to access to this "Announcement" anymore.<br>   
+								<h5>"{{ master.Title }}"</h5>													  
+								<a href="" ng-click="RemoveNews(master)" ng-confirm-click="Do you really want to proceed to remove?"><span class="glyphicon glyphicon-circle-arrow-right"></span> Remove?</a>							</nav>
+						</div>
+					</div>
+				</div>					
+			</form>
+		</div>		
+    </div>
+</uib-accordion>
+
+<!--
+	<div uib-accordion-group class="panel-default" is-open="panelRemove.isRemoveHeaderOpen">
+      <uib-accordion-heading>
+        (C) Click to remove "Announcement"<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': panelRemove.isRemoveHeaderOpen, 'glyphicon-chevron-right': !panelRemove.isRemoveHeaderOpen}"></i>
+      </uib-accordion-heading>
+		<div class="form-group">
+			<form name="frmUpload">				
+				<div class="panel-group">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<nav class = "navbar navbar-info" role = "navigation">
+								Removal of "Announcement" is a permenant event, you are no longer to access to this "Announcement" anymore.<br>   
+								<h5>"{{ master.Title }}"</h5>													  
+								<a href="" ng-click="RemoveNews(master)" ng-confirm-click="Do you really want to proceed to remove?"><span class="glyphicon glyphicon-circle-arrow-right"></span> Remove?</a>
+							</nav>
+						</div>
+					</div>
+				</div>					
+			</form>
+		</div>		
+    </div>	
+
+ -->
+
+
+<div class="form-group">
+	<div class="col-md-8 inputGroupContainer">
+		<input type="button" id="btnCancel" class="btn btn-info btn-sm" value="Back to Announcement" ng-click="CancelForm()" />
+	</div>
+</div>
+
+<br><br><br>
+
+</div>
+
+
+
+
+
+
+</fieldset>
+<div ng-include="'../SiteAssets/reconnect/templates/footer.tpl.html'"></div>
+</div>
+</div>
+</div>

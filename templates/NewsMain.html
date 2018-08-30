@@ -1,0 +1,76 @@
+<div class="container-fluid" block-ui="main">	
+	<div ng-app="ReConnectApp" ng-controller="NewsMainController" class="ngCloak">
+		<div class="row">
+			<form name="editableForm" class="form-horizontal">
+			<div ng-include="'../SiteAssets/reconnect/templates/breadcrumb.tpl.html'"></div>
+
+			<nav class="navbar navbar-info">
+				<ul class="nav navbar-nav">
+					<h4>Shangri-La News</h4>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<input ng-model="q" id="search" class="form-control" placeholder="Quick Find..." aria-describedby="basic-addon1">
+				</ul>
+			</nav>
+
+			<div class="row">
+				<div class="col-xs-2">
+					<a href="#/NewsCreate/" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-circle-arrow-right"></span> Create News</a>					
+				</div>
+				<div class="col-xs-4">
+					<div class="newsDetailContiner">
+                    	<div class="newsDetailDiv1">
+							<span ng-click="clickToSearch()" style="cursor:pointer;"><img src="https://shangrila.sharepoint.com/sites/reconnect/SiteAssets/reconnect/images/search-icon-01.png"></span>							
+                    	</div>
+                    	<div class="newsDetailDiv2">
+							<input type='text' ng-model="FormData.FromDate" ng-click="clickToSearch()" style="cursor:pointer;" readonly id="FromDate" class="input-xs" placeholder="Posted From">
+                    	</div>
+                    	<div class="newsDetailDiv3">
+							<input type='text' ng-model="FormData.ToDate" ng-click="clickToSearch()" style="cursor:pointer;" readonly id="ToDate" class="input-xs" placeholder="Posted To">
+                    	</div>		
+                    	<div class="newsDetailDiv3">
+							<input type='text' ng-model="FormData.Division" ng-click="clickToSearch()" style="cursor:pointer;" readonly id="ToDate" class="input-xs" placeholder="Division">
+                    	</div>																	
+					</div>					
+				</div>
+			</div>
+
+			<br />
+
+			<div class="row">
+				<div dir-paginate="item in master | orderBy: '-Created' | filter:q | itemsPerPage: pageSize" current-page="currentPage">
+					<div class="col-lg-4 col-md-4 col-xl-4 col-sm-12 col-xs-12">
+						<div style="height:260px;">
+							<ul class="nav navbar-nav">
+								<a href="#/NewsDetail/{{item.ID}}/">
+									<img src="{{loopImage(item.ID, item.Cover_x0020_Image)}}" style="height:100%;width:100%">
+								</a>					
+								<strong><a href="#/NewsDetail/{{item.ID}}/">{{ item.Title | limitTo: 30 }} {{ item.Title.length > 30 ? '...' : '' }}</a></strong>
+								<span class="glyphicon glyphicon-thumbs-up"></span>
+								<span class="badge">{{(item.LikesCount == null ? 0 : item.LikesCount)}}</span>								
+							</ul>
+							<ul class="nav navbar-nav">
+								<h6><small>Posted by {{ item.Author.Title }}  {{ item.Created | date:"dd-MM-yyyy" }}</small></h6>
+							</ul>
+							<ul class="nav navbar-nav navbar-right">
+								<h6><a href="#/NewsEdit/{{item.ID}}/"><span class="glyphicon glyphicon-edit"></span> Edit</a></h6>
+							</ul>
+						</div>
+					</div>
+				</div>		
+			</div>
+
+			<div class="row">
+				<nav class="navbar navbar-info">
+					<ul class="nav navbar-nav">
+						<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="../SiteAssets/reconnect/templates/NewsdirPagination.tpl.html"></dir-pagination-controls>
+						<p>
+						<span>Total No of Records:  <span class="badge"> {{total}} </span></span>
+					</ul>
+				</nav>	
+			</div>
+			</form> 			
+			<div ng-include="'../SiteAssets/reconnect/templates/footer.tpl.html'"></div>			
+		</div>
+	</div>
+</div>

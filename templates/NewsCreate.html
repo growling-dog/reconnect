@@ -1,0 +1,118 @@
+
+<div class="container-fluid" block-ui="main">  	
+<div ng-app="ReConnectApp" ng-controller="NewsCreateController" class="ngCloak">
+	<div ng-form id="NewsCreateForm" name="NewsCreateForm" class="form-horizontal">	
+	<div class="row">
+  		<fieldset ng-disabled="isSaving">
+		<div ng-include="'../SiteAssets/reconnect/templates/breadcrumb.tpl.html'"></div>
+    	<h4> Create News </h4>
+
+		<div class="form-group" ng-class="{ 'has-error' : NewsCreateForm.selDivision.$invalid && !NewsCreateForm.selDivision.$pristine }">			
+			<label class="col-md-2 control-label">Division *</label>
+			<div class="col-md-8 selectContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+					<div class="dropdown">
+						<select name="selDivision" ng-model="master.Division" ng-options="x.text for x in Division" required class="form-control">
+							<option value="">-- Select Division --</option>
+						</select>
+					</div>	
+				</div>
+				<div ng-show="NewsCreateForm.selDivision.$error.required && !NewsCreateForm.selDivision.$pristine" style="color:red" role="alert">
+					Division Name is required
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error' : NewsCreateForm.txtTitle.$invalid && !NewsCreateForm.txtTitle.$pristine }">
+			<label class="col-md-2 control-label">Title *</label>  
+			<div class="col-md-8 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-knight"></i></span>
+					<input type="text" id="txtTitle" name="txtTitle" class="form-control" ng-model="master.Title" placeholder="Title" required ng-maxlength="255" ng-minlength="5"/>
+				</div>
+				<div ng-show="NewsCreateForm.txtTitle.$error.required && !NewsCreateForm.txtTitle.$pristine" style="color:red" role="alert">Title is required.</div>
+				<div ng-show="NewsCreateForm.txtTitle.$error.minlength && !NewsCreateForm.txtTitle.$pristine" style="color:red" role="alert">Title is too short.</div>
+    			<div ng-show="NewsCreateForm.txtTitle.$error.maxlength && !NewsCreateForm.txtTitle.$pristine" style="color:red" role="alert">Title is too long.  Max 255 characters.</div>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error' : NewsCreateForm.txtDescription.$invalid && !NewsCreateForm.txtDescription.$pristine }">
+			<label class="col-md-2 control-label">Description *</label>
+			<div class="col-md-8 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+					<textarea id="txtDescription" name="txtDescription" class="form-control" ng-model="master.Description" placeholder="Description" required ng-maxlength="5000" ng-minlength="5"></textarea>
+				</div>
+				<div ng-show="NewsCreateForm.txtDescription.$error.required && !NewsCreateForm.txtDescription.$pristine" style="color:red" role="alert">Description is required.</div>
+				<div ng-show="NewsCreateForm.txtDescription.$error.minlength && !NewsCreateForm.txtDescription.$pristine" style="color:red" role="alert">Description is too short.</div>
+    			<div ng-show="NewsCreateForm.txtDescription.$error.maxlength && !NewsCreateForm.txtDescription.$pristine" style="color:red" role="alert">Description is too long.  Please shorten the description.</div>
+			</div>
+		</div>                
+
+		<div class="form-group">
+			<label class="col-md-2 control-label">Expiry Date *</label>  
+			<div class="col-md-8 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-grain"></i></span>
+					<div class="dropdown">
+						<a class="dropdown-toggle my-toggle-select" id="ExpiryDate" role="button" data-toggle="dropdown" data-target="#" href="">
+							<div class="input-group"><input type="text" class="form-control" data-ng-model="master.ExpiryDate"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div>
+						</a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<datetimepicker data-ng-model="master.ExpiryDate" startView="day" minView='day' required="true" data-datetimepicker-config="{ dropdownSelector: '.dropdown-toggle',startView:'day', minView:'day'}"></datetimepicker>
+						</ul>						
+					</div>
+				</div>
+				<div ng-show="NewsCreateForm.ExpiryDate.$error.required" style="color:red" role="alert">Expiry Date is required.</div>
+				<div class="alert alert-danger fade in" ng-show="!CustomValidator.isValidDate">
+					<span class="close" data-dismiss="alert">&times;</span>
+					<span>Expiry Date cannot less than today.</span>
+				</div>	
+			</div>
+		</div>
+
+		<div class="form-group">
+		<label class="col-md-2 control-label">Reference Links</label>  
+		<div class="col-md-8 inputGroupContainer">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>		
+
+				<input type="url" id="txtURL1" name="txtURL1" ng-model="master.URL1" class="form-control" ng-maxlength="255" ng-minlength="5" placeholder="Reference Link 1" />	
+				<span style="color:red" ng-show="NewsCreateForm.txtURL1.$error.required">You Can't Leave This Field Empty</span>
+				<span style="color:red" ng-show="NewsCreateForm.txtURL1.$error.url">This is not a Valid URL.  Don't forget to put HTTP://</span><br>				
+
+				<input type="url" id="txtURL2" name="txtURL2" ng-model="master.URL2" class="form-control"  ng-maxlength="255" ng-minlength="5" placeholder="Reference Link 2" />
+				<span style="color:red" ng-show="NewsCreateForm.txtURL2.$error.required">You Can't Leave This Field Empty</span>
+				<span style="color:red" ng-show="NewsCreateForm.txtURL2.$error.url">This is not a Valid URL.  Don't forget to put HTTP://</span><br>
+
+				<input type="url" id="txtURL3" name="txtURL3" ng-model="master.URL3" class="form-control"  ng-maxlength="255" ng-minlength="5" placeholder="Reference Link 3" />
+				<span style="color:red" ng-show="NewsCreateForm.txtURL3.$error.required">You Can't Leave This Field Empty</span>
+				<span style="color:red" ng-show="NewsCreateForm.txtURL3.$error.url">This is not a Valid URL.  Don't forget to put HTTP://</span>	<br>	
+		
+				<input type="url" id="txtURL4" name="txtURL4" ng-model="master.URL4" class="form-control"  ng-maxlength="255" ng-minlength="5" placeholder="Reference Link 4" />
+				<span style="color:red" ng-show="NewsCreateForm.txtURL4.$error.required">You Can't Leave This Field Empty</span>
+				<span style="color:red" ng-show="NewsCreateForm.txtURL4.$error.url">This is not a Valid URL.  Don't forget to put HTTP://</span><br>
+
+				<input type="url" id="txtURL5" name="txtURL5" ng-model="master.URL5" class="form-control"  ng-maxlength="255" ng-minlength="5" placeholder="Reference Link 5"/>
+				<span style="color:red" ng-show="NewsCreateForm.txtURL5.$error.required">You Can't Leave This Field Empty</span>
+				<span style="color:red" ng-show="NewsCreateForm.txtURL5.$error.url">This is not a Valid URL.  Don't forget to put HTTP://</span>	<br>
+			</div>
+		</div>
+		</div>
+
+		<div class="form-group">
+		<label class="col-md-4 control-label"></label>
+		<div class="col-md-4">
+			<input type="button" class="btn btn-info btn-sm" value="Next Step" ng-click="SubmitForm(master)" ng-disabled="NewsCreateForm.$invalid"></input>
+			<input type="button" id="btnCancel" class="btn btn-info btn-sm" value="Back" ng-click="CancelForm()" />
+		</div>
+		</div>
+
+		<div ng-include="'../SiteAssets/reconnect/templates/footer.tpl.html'"></div>
+
+		</fieldset>
+	</div>
+	</div>
+</div>
+</div>
